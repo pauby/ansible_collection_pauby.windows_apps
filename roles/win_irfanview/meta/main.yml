@@ -1,0 +1,17 @@
+galaxy_info:
+  author: Paul Broadwith (pauby)
+  description: Installs the Irfanview Chocolatey packages and sets the file associations.
+
+  issue_tracker_url: https://github.com/pauby/ansible_collection_pauby.windows_apps/issues
+
+  license: MIT
+
+  min_ansible_version: 2.1
+  platforms:
+    - name: 'Windows'
+      versions: all
+
+  galaxy_tags:
+    - windows
+    - apps
+    - irfanview

@@ -1,0 +1,31 @@
+---
+- name: 'Assert mandatory variables are defined'
+  assert:
+    that:
+      - file_assoc
+    fail_msg: '"file_assoc" must be defined'
+
+- name: 'Ensure file association Registry class "{{ file_assoc.extension }}" extension'
+  ansible.windows.win_regedit:
+    path: 'HKLM:\SOFTWARE\Classes\{{ file_assoc.extension }}'
+    data: '{{ file_assoc.app_name }}'
+    state: 'present'
+  register: _irfanview_main
+
+- ansible.windows.win_regedit:
+    path: 'HKLM:\SOFTWARE\Classes\{{ file_assoc.extension }}'
+    name: 'Content Type'
+    data: '{{ file_assoc.content_type | default(omit) }}'
+    state: 'present'
+  register: _irfanview_content
+
+- ansible.windows.win_regedit:
+    path: 'HKLM:\SOFTWARE\Classes\{{ file_assoc.extension }}'
+    name: 'PerceivedType'
+    data: '{{ file_assoc.perceived_type | default(omit) }}'
+    state: 'present'
+  register: _irfanview_perceived
+
+- name: 'Ensure default file association for "{{ file_assoc.extension }}"'
+  win_command: 'setuserfta.exe {{ file_assoc.extension }} {{ file_assoc.app_name }}'
+  when: _irfanview_main.changed or _irfanview_content.changed or _irfanview_perceived.changed
