@@ -4,4 +4,4 @@ A collection to help with managing Windows software.
 
 ## Roles
 
-* [irfanview](roles/irfanview/blob/master/README.md)
+* [irfanview](/roles/win_irfanview/README.md)
