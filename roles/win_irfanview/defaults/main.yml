@@ -1,0 +1,6 @@
+---
+# Instalall of the Irfanview plugins (Chocolatey package irfanviewplugins)
+install_plugins: false
+
+# Install the Irfanview shell extension (Chocolatey package irfanview-shellextension
+install_shellextension: false

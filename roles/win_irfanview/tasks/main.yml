@@ -1,0 +1,25 @@
+---
+
+- set_fact:
+    packages:
+      - 'irfanview'
+      - 'setuserfta'
+
+- set_fact:
+    packages: '{{ packages + [ "irfanviewplugins" ] }}'
+  when: install_plugins == true
+
+- set_fact:
+    packages: '{{ packages + [ "irfanview-shellextension" ] }}'
+  when: install_shellextension == true
+
+- name: 'Ensure the required Chocolatey packages are installed'
+  chocolatey.chocolatey.win_chocolatey:
+    name: '{{ packages }}'
+    state: 'latest'
+
+- name: 'Ensure the Irfanview file associations have been set'
+  include_tasks: 'file_assoc.yml'
+  vars:
+    file_assoc: '{{ item }}'
+  loop: '{{ registry_changes }}'
